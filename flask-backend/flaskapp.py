@@ -1,25 +1,12 @@
 from flask import Flask, render_template, url_for
-app = Flask(__name__)
+import audiomanager
 
-posts = [
-    {
-        'author': 'Chuck Stein',
-        'title': 'blog post 1',
-        'content': 'blog post 1 content',
-        'date': 'September 29, 2019'
-    },
-    {
-        'author': 'Hannah Lauterwasser',
-        'title': 'blog post 2',
-        'content': 'blog post 2 content',
-        'date': 'September 30, 2019'
-    }
-]
+app = Flask(__name__)
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('index.html', posts=posts, token='Hello World')
+    return render_template('index.html', excerpt_id='')
 
 # @app.route('/about')
 # def about():

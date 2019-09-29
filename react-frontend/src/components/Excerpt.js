@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import ExcerptHeader from './ExcerptHeader';
-import ExcerptPlayer from './ExcerptPlayer';
-import ExcerptCopier from './ExcerptCopier';
 
 class Excerpt extends Component {
+
+    // TODO: this should be in props, not state
     state = {
         id: 0, // TODO: once movement/section/measure/excerpt structure is implemented, id should be a string (e.g. '5v120ui5p')
         headerText: 'Excerpt ' + this.abbreviateExcerptID(5)
@@ -12,9 +11,7 @@ class Excerpt extends Component {
     render() {
         return (
             <div>
-                <ExcerptHeader text={this.state.headerText} />
-                <ExcerptPlayer />
-                <ExcerptCopier />
+                <h1>{'Excerpt ' + this.abbreviateExcerptID(5)}</h1>
             </div>
         );
     }
@@ -27,7 +24,7 @@ class Excerpt extends Component {
      */
     abbreviateExcerptID(numChars) {
         let abbreviation = '';
-        let idAsString = String(this.state.id);
+        let idAsString = String(this.props.id); // TODO: should there be protection if props has no id?
         if (idAsString.length <= numChars * 2) {
             return idAsString;
         }
