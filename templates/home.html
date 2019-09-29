@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Symphony of Babel</h1>
+    <ul>
+    <li><a href="/browse"><h3>Browse</h3></a></li>
+    <li><a href="/search"><h3>Search</h3></a></li>
+    <li><a href="/random"><h3>Random</h3></a></li>
+    <li><a href="/about"><h3>About</h3></a></li>
+    </ul>
+    <!--EXAMPLE:
+    {% for post in posts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+    -->
+{% endblock content %}
