@@ -15,28 +15,38 @@ HOW LIBRARY OF BABEL WORKS:
 - 10^4677 pages in Library of Babel
 
 SYMPHONY OF BABEL FEATURES:
+- browse (organized by movement/section/measure/excerpt)
 - microphone search
 - search via audio file upload
 - random instrument
-- random popular instrument (or list of most popular instruments) based on web traffic
-- random lead instrument (do waveform analysis to only search from what's not white noise)
+- random popular excerpt (or list of most popular instruments) based on web traffic
+- random distinguished/notable excerpt (do waveform analysis to only search from what's not white noise)
+- users can add tags to instruments/buffers
 
 TODO:
-- add percentages when searching for buffers (based on main loop progress)
+- add percentages when searching for excerpts (based on main loop progress)
 - document all functions
 - add ability to replay buffer once located (so it doesn't have to load again, because program doesn't just exit)
 - add presets for sample_rate/sample_range/audio_duration, to correspond with saved buffer IDs
 - overflow protection (illegal argument checks)
 - optimize algorithms to generally run faster
 - optimize for best balance of buffer duration / audio quality vs. load times
+- make order of excerpts random (may have to use Babel algorithm)
 
 OPTIMIZATIONS:
-- may be able to half the necessary instruments because inverted waveform = uninverted waveform
-- may be able to remove instruments that are just other instruments but louder (if each sample is the same
+- may be able to half the necessary excerpts because inverted waveform = uninverted waveform
+- may be able to remove excerpts that are just other excerpts but louder (if each sample is the same
   apart from a constant factor)
 - may be able to simplify it by only creating sounds with continuous waveforms (every consecutive sample must be within
   1/4 the full sample range of each other... research/experiment to determine most reasonable constraint... constraint also
   may need to be logarithmic)
+  
+GLOBAL TODO:
+- should venv/ be in main directory or flask-backend/ directory?
+- figure out the best way to document python and javascript, and enforce variable types in function calls
+- add tests for python and javascript
+- implement style guidelines
+- move this global TODO (and general info comments) to a more relevant file
 '''
 
 
