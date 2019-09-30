@@ -2,38 +2,75 @@ import React, { Component } from 'react';
 
 class Excerpt extends Component {
 
-    // TODO: this should be in props, not state
     state = {
-        id: 0, // TODO: once movement/section/measure/excerpt structure is implemented, id should be a string (e.g. '5v120ui5p')
-        headerText: 'Excerpt ' + this.abbreviateExcerptID(5)
+        loading: true,
+        id: -1,
+        bufferData: []
     };
+
+    async componentDidMount() {
+        const response = await fetch('/excerpt');
+        const data = await response.json();
+        this.setState({
+            loading: false,
+            id: data.excerptID,
+            bufferData: data.excerptData
+        });
+    }
 
     render() {
         return (
             <div>
-                <h1>{'Excerpt ' + this.abbreviateExcerptID(5)}</h1>
+                <h1>
+                    {this.state.loading ? 'loading excerpt...'
+                    : 'Excerpt ' + this.abbreviateExcerptID(5)}
+                </h1>
+                <button type='button' onClick={this.playExcerpt}>Play Excerpt</button>
             </div>
         );
     }
 
+    playExcerpt = (event) => {
+        if (this.state.loading) {
+            return;
+        }
+        console.log("buffer data type: " + typeof this.state.bufferData);
+        console.log("buffer data element type: " + typeof this.state.bufferData[0]);
+        console.log("Buffer data: " + this.state.bufferData);
+        if (!window.AudioContext) {
+            if (!window.webkitAudioContext) {
+                alert("Your browser cannot play this excerpt because it does not support any AudioContext.");
+                return;
+            }
+            window.AudioContext = window.webkitAudioContext;
+        }
+        let context = new AudioContext();
+        let source = context.createBufferSource();
+        let buffer = context.createBuffer(1, window.excerptSize, window.sampleRate);
+        buffer.copyToChannel(new Float32Array(this.state.bufferData), 0);
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.start(0);
+        console.log("Excerpt should be playing...");
+    };
+
     /**
-     * Get a string abbreviating this excerpt's ID, using its first {@param numChars} digits, followed by an ellipsis,
-     * followed by its last {@param numChars} digits.
+     * Get a string abbreviating this excerpt's ID, using its first {@param numChars} characters, followed by an ellipsis,
+     * followed by its last {@param numChars} characters.
      * @param {number} numChars - The number of characters to which the beginning and end of the ID will be abbreviated
      * @returns {string} - The abbreviated ID, as a string
      */
     abbreviateExcerptID(numChars) {
         let abbreviation = '';
-        let idAsString = String(this.props.id); // TODO: should there be protection if props has no id?
-        if (idAsString.length <= numChars * 2) {
-            return idAsString;
+        if (this.state.id.length <= numChars * 2) {
+            return this.state.id;
         }
-        for (i = 0; i < numChars; i++) {
-            abbreviation += idAsString.charAt(i);
+        for (let i = 0; i < numChars; i++) {
+            abbreviation += this.state.id.charAt(i);
         }
         abbreviation += '...';
-        for (i = 0; i < numChars; i++) {
-            abbreviation += idAsString.charAt(idAsString.length - numChars + i);
+        for (let i = 0; i < numChars; i++) {
+            abbreviation += this.state.id.charAt(this.state.id.length - numChars + i);
         }
         return abbreviation;
     }

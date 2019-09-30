@@ -50,8 +50,26 @@ assert(len(SAMPLE_VALUES) == SAMPLE_RANGE)
 
 # DEFINE FUNCTIONS FOR WORKING WITH AUDIO EXCERPTS
 
+def get_random_excerpt_id():
+    return r.randrange(TOTAL_EXCERPTS)
 
-def get_excerpt(id):
+
+def get_excerpt_data(id):
+    sample_levels = bc.base(id, 10, SAMPLE_RANGE)
+    excerpt_data = [1] * (TOTAL_SAMPLES - len(sample_levels))  # TODO: check for off-by-1 error
+    for sample_level in sample_levels:
+        excerpt_data.append(SAMPLE_VALUES[sample_level])
+    return excerpt_data
+
+    # buffer = np.ones(TOTAL_SAMPLES, dtype=np.float32)
+    # for i in range(len(sample_levels)):
+    #     # add samples from back to front to preserve leading zeros
+    #     sample_value = sample_levels[len(sample_levels) - 1 - i]
+    #     buffer[TOTAL_SAMPLES - 1 - i] = SAMPLE_VALUES[sample_value]
+    # return buffer
+
+# backend only
+def get_excerpt_as_np(id):
     sample_levels = bc.base(id, 10, SAMPLE_RANGE)
     buffer = np.ones(TOTAL_SAMPLES, dtype=np.float32)
     for i in range(len(sample_levels)):
@@ -63,7 +81,7 @@ def get_excerpt(id):
 
 def play_excerpt(id):
     print("Locating buffer...")
-    buffer = get_excerpt(id)
+    buffer = get_excerpt_as_np(id)
     print("Playing buffer...")
     with sc.default_speaker().player(samplerate=SAMPLE_RATE) as speaker:
         speaker.play(buffer)
