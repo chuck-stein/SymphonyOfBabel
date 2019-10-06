@@ -1,20 +1,31 @@
 from flask import Flask, render_template, jsonify, request, url_for
-import audiomanager
+import audiomanager as am
 
 app = Flask(__name__)
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('index.html', sample_rate=audiomanager.SAMPLE_RATE, excerpt_size=audiomanager.TOTAL_SAMPLES)
+    return render_template('index.html', sample_rate=am.SAMPLE_RATE, excerpt_size=am.TOTAL_SAMPLES)
+# TODO: don't render template here, just do html
+
+
+@app.route('/random', methods=['GET'])
+def get_random_excerpt():
+    random_excerpt_id = am.get_random_excerpt_id()
+    random_excerpt_data = am.get_excerpt_data(random_excerpt_id)
+    return jsonify({'excerptID': str(random_excerpt_id), 'excerptData': random_excerpt_data}), 200
 
 
 @app.route('/excerpt', methods=['GET'])
-def excerpt():
-    random_excerpt_id = audiomanager.get_random_excerpt_id()
-    random_excerpt_data = audiomanager.get_excerpt_data(random_excerpt_id)
-    return jsonify({'excerptID': str(random_excerpt_id), 'excerptData': random_excerpt_data}), 200
-
+def get_excerpt():
+    id = request.args.get('id')
+    try:
+        excerpt_data = am.get_excerpt_data(id)
+    except (TypeError, ValueError):
+        return 'Bad ID format', 400  # TODO: is this the right return value?
+    else:
+        return jsonify({'excerptData': excerpt_data}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
