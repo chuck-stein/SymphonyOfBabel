@@ -17,6 +17,7 @@ function Browse() {
 
     return shouldFetch ? (<Redirect to={excerptPath}/>) : (
         <div className='browse'>
+            <h2>Paste the ID of the excerpt you want to navigate to:</h2>
             <textarea id='idField' rows='10' cols='50' />
             <Button text='Locate' callback={() => enterID()} />
         </div>
