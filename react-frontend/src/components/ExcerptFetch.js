@@ -15,9 +15,6 @@ const ExcerptFetch = (props) => {
                 const response = await axios.post('/specificExcerpt', {
                     id: props.match.params.id
                 });
-                //     {
-                //     maxContentLength: 50000
-                // }); // TODO: delete config if not necessary
                 const data = await response.data;
                 console.log("response data: " + data);
                 setBufferData(data.excerptData);

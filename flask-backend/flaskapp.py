@@ -26,5 +26,6 @@ def get_excerpt():
     else:
         return jsonify({'excerptData': excerpt_data}), 200
 
+
 if __name__ == '__main__':
     app.run(debug=True)

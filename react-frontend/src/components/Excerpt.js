@@ -1,11 +1,11 @@
 import React, {useState, useContext} from 'react';
 import Button from "./Button";
-import AudioContext from "../AudioContext";
+import AudioSettingsContext from "../AudioSettingsContext";
 
 function Excerpt(props) {
 
     const [playing, setPlaying] = useState(false);
-    const audioContext = useContext(AudioContext);
+    const audioContext = useContext(AudioSettingsContext);
 
     /**
      * Get a string abbreviating this excerpt's ID, using its first {@param numChars} characters, followed by an ellipsis,

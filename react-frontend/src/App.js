@@ -8,7 +8,7 @@ import Search from "./components/Search";
 import Random from "./components/Random";
 import axios from "axios";
 import ExcerptFetch from "./components/ExcerptFetch";
-import {AudioProvider} from "./AudioContext";
+import {AudioSettingsProvider} from "./AudioSettingsContext";
 
 function App() {
 
@@ -33,7 +33,7 @@ function App() {
     }, []);
 
     return (
-        <AudioProvider value={audioContext}>
+        <AudioSettingsProvider value={audioContext}>
            <Router>
                 <div className="App">
                     <Nav />
@@ -46,7 +46,7 @@ function App() {
                     </Switch>
                 </div>
             </Router>
-        </AudioProvider>
+        </AudioSettingsProvider>
     );
 }
 
