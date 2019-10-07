@@ -18,13 +18,21 @@ def get_random_excerpt():
 
 @app.route('/specificExcerpt', methods=['POST'])
 def get_excerpt():
-    id = request.json["id"]
+    id = request.json['id']
     try:
         excerpt_data = am.get_excerpt_data(id)
     except (TypeError, ValueError):
         return 'Bad ID format', 400
     else:
         return jsonify({'excerptData': excerpt_data}), 200
+
+
+@app.route('/searchByMic', methods=['POST'])
+def search_by_mic():
+    mic_data = request.json['micData']
+    id = am.get_excerpt_id(mic_data)
+    excerpt_data = am.get_excerpt_data(id)
+    return jsonify({'excerptID': id, 'excerptData': excerpt_data})
 
 
 if __name__ == '__main__':

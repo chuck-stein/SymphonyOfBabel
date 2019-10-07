@@ -58,18 +58,13 @@ textarea {
     width: 1000px;
 }
 
-.loadScreen {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+/*.loadScreen {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    flex-direction: column;*/
+/*}*/
 
-    /*display: block;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
-    /*width: 40%;*/
-}
-
-.excerpt, .browse {
+.browse, .search, .excerpt, .loadScreen {
     display: flex;
     flex-direction: column;
     justify-content: center;
