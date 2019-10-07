@@ -4,20 +4,25 @@ import audiomanager as am
 app = Flask(__name__)
 
 
-@app.route('/random', methods=['GET'])
+@app.route('/audioSettings', methods=['GET'])
+def get_audio_settings():
+    return jsonify({'sampleRate': am.SAMPLE_RATE, 'excerptDuration': am.EXCERPT_DURATION}), 200
+
+
+@app.route('/randomExcerpt', methods=['GET'])
 def get_random_excerpt():
     random_excerpt_id = am.get_random_excerpt_id()
     random_excerpt_data = am.get_excerpt_data(random_excerpt_id)
     return jsonify({'excerptID': random_excerpt_id, 'excerptData': random_excerpt_data}), 200
 
 
-@app.route('/excerpt', methods=['GET'])
+@app.route('/specificExcerpt', methods=['POST'])
 def get_excerpt():
-    id = request.args.get('id')
+    id = request.json["id"]
     try:
         excerpt_data = am.get_excerpt_data(id)
     except (TypeError, ValueError):
-        return 'Bad ID format', 400  # TODO: is this the right return value?
+        return 'Bad ID format', 400
     else:
         return jsonify({'excerptData': excerpt_data}), 200
 

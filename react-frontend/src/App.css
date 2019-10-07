@@ -48,6 +48,10 @@ nav a:hover {
     background-color: #CDCACC;
 }
 
+textarea {
+    border-radius: 10px;
+}
+
 .aboutParagraph {
     margin-left: auto;
     margin-right: auto;
@@ -65,14 +69,14 @@ nav a:hover {
     /*width: 40%;*/
 }
 
-.excerpt {
+.excerpt, .browse {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-button {
+.buttonComponent {
     background-color: #CDD6DD;
     font-size: 18px;
     width: 200px;
@@ -84,6 +88,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.buttonComponent:hover {
     background-color: #CCFBFE;
 }

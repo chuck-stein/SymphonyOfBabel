@@ -67,6 +67,8 @@ def get_excerpt_data(id: str) -> List[int]:
         excerpt_data.append(SAMPLE_VALUES[sample_index])
     return excerpt_data
 
+# data = get_excerpt_data("26hgshxmasjyns435y78cxp8wr9ew33bewh6u9t6m6kmnm8im48uxh5d1nlxh2fvbdipqtm7mbpqr92aef3lb2nqok8lou8ijqb2q2ow6an7ggw1k6fq0d4dn0dcbkamh1on8i76wwj98kv7jt9f1kjrdxa23twv2wbtsqljl55de4i9jfvnt52yi4c0l50jsb6d35imamhh78iuv01ogm9sa16rngxgpd1j9dfnvc41p9u37a14ipdcrhccolp4hhykqsu422roweo4sktbcnu3923ufr69pc2oja63vfbu9f646lj7owjtauhf8qnkpr17i1tjdokeoyofm0y03m0r9bnc2pkht00ggqj5s9jdlfriejk8skau5drqkfsi9xf91a654hh6ksff78vi3x01lnrywb7omox2a95ufa6bih1wbggj3pm4bks58c5fpo668908jngh2p8qk4yveonapqbse02e5snamumsk3ib3s91l8sw")
+# print(str(data))
 
 def get_excerpt_data_from_base10(id: int) -> List[int]:
     # TODO: can I do this range check in the flask route, along with the type check?

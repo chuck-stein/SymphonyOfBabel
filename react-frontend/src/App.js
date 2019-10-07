@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import './App.css';
 import Nav from "./components/Nav";
@@ -6,38 +6,47 @@ import About from "./components/About";
 import Browse from "./components/Browse";
 import Search from "./components/Search";
 import Random from "./components/Random";
-import IdForm from "./components/IdForm";
-import Excerpt from "./components/Excerpt";
 import axios from "axios";
+import ExcerptFetch from "./components/ExcerptFetch";
+import {AudioProvider} from "./AudioContext";
 
 function App() {
 
+    // TODO: check to make sure I'm using Context API right
+    const [audioContext, setAudioContext] = useState({
+        sampleRate: 24000,
+        excerptDuration: 5
+    });
+
     useEffect(() => {
-        async function getRandomExcerpt() {
-            console.log("fetching random excerpt...");
-            const response = await axios.get('/random');
+        async function getAudioSettings() {
+            const response = await axios.get('/audioSettings');
             const data = await response.data;
-            console.log("response data: " + data);
-            setID(data.excerptID);
-            setBufferData(data.excerptData);
-            setLoading(false);
+
+            // TODO: is this the best way to save sample rate and excerpt duration as global constants?
+            setAudioContext({
+                sampleRate: data.sampleRate,
+                excerptDuration: data.excerptDuration
+            });
         }
-        getRandomExcerpt();
+        getAudioSettings();
     }, []);
 
     return (
-        <Router>
-            <div className="App">
-                <Nav />
-                <Switch>
-                    <Route exact path='/' component={About} />
-                    <Route path='/browse' component={IdForm} />
-                    <Route path='/search' component={Search} />
-                    <Route path='/random' component={Random} />
-                    <Route path='/excerpt/:id' component={Excerpt} />
-                </Switch>
-            </div>
-        </Router>
+        <AudioProvider value={audioContext}>
+           <Router>
+                <div className="App">
+                    <Nav />
+                    <Switch>
+                        <Route exact path='/' component={About} />
+                        <Route path='/browse' component={Browse} />
+                        <Route path='/search' component={Search} />
+                        <Route path='/random' component={Random} />
+                        <Route path='/excerpt/:id' component={ExcerptFetch} />
+                    </Switch>
+                </div>
+            </Router>
+        </AudioProvider>
     );
 }
 
