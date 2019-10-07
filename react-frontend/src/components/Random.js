@@ -9,14 +9,17 @@ function Random() {
     const [id, setID] = useState(-1);
     const [bufferData, setBufferData] = useState([]);
 
-    useEffect(async () => {
-        console.log("fetching random excerpt...");
-        const response = await axios.get('/random');
-        const data = await response.data;
-        console.log("response data: " + data);
-        setID(data.excerptID);
-        setBufferData(data.excerptData);
-        setLoading(false);
+    useEffect(() => {
+        async function getRandomExcerpt() {
+            console.log("fetching random excerpt...");
+            const response = await axios.get('/random');
+            const data = await response.data;
+            console.log("response data: " + data);
+            setID(data.excerptID);
+            setBufferData(data.excerptData);
+            setLoading(false);
+        }
+        getRandomExcerpt();
     }, []);
 
     return (

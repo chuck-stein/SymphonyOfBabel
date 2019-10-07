@@ -14,25 +14,24 @@ life, the universe, and everything is contained here, and each excerpt can be lo
 # DEFINE APP-WIDE AUDIO PROPERTIES
 
 # base 35 digits
-B35_DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-              "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"]
+B35_DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+              "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"]
 
 # the audio sample rate, in Hz (samples per second)
-SAMPLE_RATE = 10000
+SAMPLE_RATE = 24000
 
 # the number of possible different sample values in an audio excerpt
 # (limiting the possibilities in this way greatly decreases the number of possible excerpts which sound the same)
 SAMPLE_RANGE = 35
 
-# the duration of each excerpt
-EXCERPT_DURATION = 1
+# the duration of each excerpt, in seconds
+EXCERPT_DURATION = 5
 
 # the number of samples in each excerpt
 TOTAL_SAMPLES = SAMPLE_RATE * EXCERPT_DURATION
 
 # the number of possible audio excerpts in existence (given our data constraints)
 TOTAL_EXCERPTS = SAMPLE_RANGE ** TOTAL_SAMPLES
-
 
 def get_sample_values() -> tuple:
     """
@@ -56,7 +55,7 @@ assert (len(SAMPLE_VALUES) == SAMPLE_RANGE)
 
 # DEFINE FUNCTIONS FOR WORKING WITH AUDIO EXCERPTS
 
-def get_random_excerpt_id():
+def get_random_excerpt_id() -> str:
     digits = r.choices(B35_DIGITS, k=TOTAL_SAMPLES)
     return ''.join(digits)
 
@@ -107,8 +106,7 @@ def play_random_excerpt():
 def round_sample(sample):
     for i in range(len(SAMPLE_VALUES)):
         if SAMPLE_VALUES[i] < sample:
-            if sample - SAMPLE_VALUES[i] > SAMPLE_VALUES[
-                i - 1] - sample:  # TODO: fix this, it's a linear comparison on a quadratic relation
+            if sample - SAMPLE_VALUES[i] > SAMPLE_VALUES[i - 1] - sample:  # TODO: fix this, it's a linear comparison on a quadratic relation
                 return SAMPLE_VALUES[i - 1]
             else:
                 return SAMPLE_VALUES[i]

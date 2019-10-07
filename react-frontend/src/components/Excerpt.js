@@ -22,7 +22,7 @@ const playExcerpt = (bufferData) => {
     }
     let context = new AudioContext();
     let source = context.createBufferSource();
-    let buffer = context.createBuffer(1, window.excerptSize, window.sampleRate);
+    let buffer = context.createBuffer(1, 5 * 24000, 24000); // TODO: keep excerptDuration and sampleRate as global variables via initial API call
     buffer.copyToChannel(new Float32Array(bufferData), 0);
     source.buffer = buffer;
     source.connect(context.destination);

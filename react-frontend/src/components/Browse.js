@@ -10,23 +10,26 @@ function Browse() {
     const [id, setID] = useState(-1);
     const [bufferData, setBufferData] = useState([]);
 
-    useEffect( async () => {
-        const response = await axios.get('/excerpt', {
-            params: {
-                id: this.props.id
+    useEffect(() => {
+        async function getExcerpt() {
+            const response = await axios.get('/excerpt', {
+                params: {
+                    id: this.props.id
+                }
+            });
+            if (response.ok) {
+                const data = await response.data;
+                console.log("response data: " + data);
+                // this.setState({
+                //    loading: false,
+                //    bufferData: data.excerptData
+                // });
+            } else {
+                console.log("BAD REQUEST - INVALID ID")
+                // TODO: handle bad request in view
             }
-        });
-        if (response.ok) {
-            const data = await response.data;
-            console.log("response data: " + data);
-            // this.setState({
-            //    loading: false,
-            //    bufferData: data.excerptData
-            // });
-        } else {
-            console.log("BAD REQUEST - INVALID ID")
-            // TODO: handle bad request in view
         }
+        getExcerpt();
     }, [id]);
 
     return (

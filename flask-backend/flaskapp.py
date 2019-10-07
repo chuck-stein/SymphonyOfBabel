@@ -3,18 +3,12 @@ import audiomanager as am
 
 app = Flask(__name__)
 
-@app.route('/')
-@app.route('/home')
-def home():
-    return render_template('index.html', sample_rate=am.SAMPLE_RATE, excerpt_size=am.TOTAL_SAMPLES)
-# TODO: don't render template here, just do html
-
 
 @app.route('/random', methods=['GET'])
 def get_random_excerpt():
     random_excerpt_id = am.get_random_excerpt_id()
     random_excerpt_data = am.get_excerpt_data(random_excerpt_id)
-    return jsonify({'excerptID': str(random_excerpt_id), 'excerptData': random_excerpt_data}), 200
+    return jsonify({'excerptID': random_excerpt_id, 'excerptData': random_excerpt_data}), 200
 
 
 @app.route('/excerpt', methods=['GET'])
