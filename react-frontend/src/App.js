@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import axios from "axios";
 import './App.css';
 import Nav from "./components/Nav";
 import About from "./components/About";
 import Browse from "./components/Browse";
 import Search from "./components/Search";
 import Random from "./components/Random";
-import axios from "axios";
-import ExcerptFetch from "./components/ExcerptFetch";
+
+import Excerpt from "./components/Excerpt";
 import {AudioSettingsProvider} from "./AudioSettingsContext";
 
 function App() {
@@ -42,7 +43,7 @@ function App() {
                         <Route path='/browse' component={Browse} />
                         <Route path='/search' component={Search} />
                         <Route path='/random' component={Random} />
-                        <Route path='/excerpt/:id' component={ExcerptFetch} />
+                        <Route path='/excerpt/:id' component={Excerpt} />
                     </Switch>
                 </div>
             </Router>

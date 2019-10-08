@@ -1,9 +1,15 @@
 import React, {useState, useContext} from 'react';
 import Button from "./Button";
 import AudioSettingsContext from "../AudioSettingsContext";
+import axios from "axios";
+import LoadScreen from "./LoadScreen";
+
+Excerpt.defaultProps = { givenBufferData: null };
 
 function Excerpt(props) {
 
+    const [fetchedBufferData, setFetchedBufferData] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [playing, setPlaying] = useState(false);
     const audioContext = useContext(AudioSettingsContext);
 
@@ -14,16 +20,17 @@ function Excerpt(props) {
      * @returns {string} - The abbreviated ID, as a string
      */
     const abbreviateExcerptID = (numChars) => {
+        const id = props.match.params.id;
         let abbreviation = '';
-        if (props.id.length <= numChars * 2) {
-            return props.id;
+        if (id.length <= numChars * 2) {
+            return id;
         }
         for (let i = 0; i < numChars; i++) {
-            abbreviation += props.id.charAt(i);
+            abbreviation += id.charAt(i);
         }
         abbreviation += '...';
         for (let i = 0; i < numChars; i++) {
-            abbreviation += props.id.charAt(props.id.length - numChars + i);
+            abbreviation += id.charAt(id.length - numChars + i);
         }
         return abbreviation;
     };
@@ -46,7 +53,8 @@ function Excerpt(props) {
             };
             let buffer = context.createBuffer(1,
                 audioContext.excerptDuration * audioContext.sampleRate, audioContext.sampleRate); // TODO: keep excerptDuration and sampleRate as global variables via initial API call
-            buffer.copyToChannel(new Float32Array(props.bufferData), 0);
+            const bufferData = props.givenBufferData != null ? props.givenBufferData : fetchedBufferData;
+            buffer.copyToChannel(new Float32Array(bufferData), 0);
             source.buffer = buffer;
             source.connect(context.destination);
             source.start(0);
@@ -56,17 +64,38 @@ function Excerpt(props) {
     const copyID = () => {
         const dummyTextArea = document.createElement("textarea");
         document.body.appendChild(dummyTextArea);
-        dummyTextArea.value = props.id;
+        dummyTextArea.value = props.match.params.id;
         dummyTextArea.select();
         document.execCommand("copy");
         document.body.removeChild(dummyTextArea);
     };
 
+    useEffect(() => {
+        async function getExcerpt() {
+            try {
+                const response = await axios.post('/specificExcerpt', {
+                    id: props.match.params.id
+                });
+                const data = await response.data;
+                setFetchedBufferData(data.excerptData);
+                setLoading(false);
+            } catch (error) { // TODO: handle bad request in view
+                console.log("ERROR: " + error);
+            }
+        }
+        if (props.givenBufferData == null) {
+            setLoading(true);
+            getExcerpt();
+        }
+    }, []); // TODO: ensure this only runs once
+
     return (
         <div className='excerpt'>
-            <h1>Excerpt {abbreviateExcerptID(5)}</h1>
-            <Button text='Play Excerpt' callback={() => playExcerpt()} />
-            <Button text='Copy Excerpt ID' callback={() => copyID()} />
+            {loading ? <LoadScreen /> : [
+                <h1>Excerpt {abbreviateExcerptID(5)}</h1>,
+                <Button text='Play Excerpt' callback={() => playExcerpt()} />,
+                <Button text='Copy Excerpt ID' callback={() => copyID()} />
+            ]}
         </div>
     );
 }
