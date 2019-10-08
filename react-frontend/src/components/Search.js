@@ -14,7 +14,7 @@ function Search() {
     useEffect(() => {
         async function search() {
             const searchQueryData = new FormData();
-            searchQueryData.append('searchquery', searchQuery, 'search-query.wav');
+            searchQueryData.append('searchQuery', searchQuery, 'search-query.wav');
             const config = {
                 headers: { 'content-type': 'multipart/form-data' }
             };
