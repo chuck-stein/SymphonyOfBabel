@@ -48,6 +48,7 @@
     "react-app-polyfill": "^1.0.3",
     "react-dev-utils": "^9.0.4",
     "react-dom": "^16.10.1",
+    "react-media-recorder": "^0.7.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.2.0",
     "resolve": "1.12.0",

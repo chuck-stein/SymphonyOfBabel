@@ -4,6 +4,8 @@ import soundcard as sc
 import numpy as np
 import random as r
 import baseconvert as bc
+import wave
+import filetype
 # TODO: clean up file, remove unused imports, remove local implementation from production version
 
 '''
@@ -61,6 +63,20 @@ def get_random_excerpt_id() -> str:
     return ''.join(digits)
 
 
+def get_excerpt_id_from_wav(wav_file) -> str: #TODO: remove the "_from_wav" from this function name if I don't need regular get_excerpt_id function
+
+    kind = filetype.guess(wav_file)
+    if kind is None:
+        print('Cannot guess file type!')
+        return
+
+    print('File extension: %s' % kind.extension)
+    print('File MIME type: %s' % kind.mime)
+
+    data = wave.open(wav_file, 'rb')
+    print(str(data))
+
+
 def get_excerpt_data(id: str) -> List[int]:
     excerpt_data = []
     for b35_digit in id:
@@ -70,6 +86,7 @@ def get_excerpt_data(id: str) -> List[int]:
 
 
 def get_excerpt_data_from_base10(id: int) -> List[int]:
+    # TODO: delete if unused
     # TODO: can I do this range check in the flask route, along with the type check?
     # if id < 0 or id >= TOTAL_EXCERPTS:
     #     raise ValueError
