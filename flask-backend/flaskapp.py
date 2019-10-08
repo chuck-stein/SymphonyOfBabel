@@ -27,7 +27,7 @@ def get_excerpt():
         return jsonify({'excerptData': excerpt_data}), 200
 
 
-@app.route('/searchByMic', methods=['POST'])
+@app.route('/searchQuery', methods=['POST'])
 def search_by_mic():
     mic_data = request.json['micData']
     id = am.get_excerpt_id(mic_data)

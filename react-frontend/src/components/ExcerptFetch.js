@@ -10,17 +10,14 @@ const ExcerptFetch = (props) => {
 
     useEffect(() => {
         async function getExcerpt() {
-            console.log('requesting excerpt from id: ' + props.match.params.id);
             try {
                 const response = await axios.post('/specificExcerpt', {
                     id: props.match.params.id
                 });
                 const data = await response.data;
-                console.log("response data: " + data);
                 setBufferData(data.excerptData);
                 setLoading(false);
-                // TODO: handle bad request in view
-            } catch (error) {
+            } catch (error) { // TODO: handle bad request in view
                 console.log("ERROR: " + error);
             }
 
