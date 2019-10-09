@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, url_for
+from flask import Flask, jsonify, request
 import audiomanager as am
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ def get_audio_settings():
 
 @app.route('/randomExcerpt', methods=['GET'])
 def get_random_excerpt():
-    random_excerpt_id = am.get_random_excerpt_id()
+    random_excerpt_id = am.get_random_id()
     random_excerpt_data = am.get_excerpt_data(random_excerpt_id)
     return jsonify({'excerptID': random_excerpt_id, 'excerptData': random_excerpt_data}), 200
 
@@ -27,12 +27,21 @@ def get_excerpt():
         return jsonify({'excerptData': excerpt_data}), 200
 
 
-@app.route('/searchQuery', methods=['POST'])
+@app.route('/searchByMic', methods=['POST'])
 def search_by_mic():
-    search_query = request.files['searchquery']
-    id = am.get_excerpt_id_from_wav(search_query)
-    excerpt_data = am.get_excerpt_data(id)
-    return jsonify({'excerptID': id, 'excerptData': excerpt_data})
+    search_query = request.json['searchQuery']
+    excerpt_id = am.get_id_from_buffer(search_query)
+    excerpt_data = am.get_excerpt_data(excerpt_id)
+    return jsonify({'excerptID': excerpt_id, 'excerptData': excerpt_data})
+
+
+# NOT YET IMPLEMENTED:
+# @app.route('/searchByFile', methods=['POST'])
+# def search_by_mic():
+#     search_query = request.files['searchQuery']
+#     id = am.get_excerpt_id_from_wav(search_query)
+#     excerpt_data = am.get_excerpt_data(id)
+#     return jsonify({'excerptID': id, 'excerptData': excerpt_data})
 
 
 if __name__ == '__main__':

@@ -11,9 +11,7 @@ const ExcerptFetch = (props) => {
     useEffect(() => {
         async function getExcerpt() {
             try {
-                const response = await axios.post('/specificExcerpt', {
-                    id: props.match.params.id
-                });
+                const response = await axios.post('/specificExcerpt', { id: props.match.params.id });
                 const data = await response.data;
                 setBufferData(data.excerptData);
                 setLoading(false);

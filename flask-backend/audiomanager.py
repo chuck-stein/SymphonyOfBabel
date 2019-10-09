@@ -58,23 +58,28 @@ assert (len(SAMPLE_VALUES) == SAMPLE_RANGE)
 
 # DEFINE FUNCTIONS FOR WORKING WITH AUDIO EXCERPTS
 
-def get_random_excerpt_id() -> str:
+def get_random_id() -> str:
     digits = r.choices(B35_DIGITS, k=TOTAL_SAMPLES)
     return ''.join(digits)
 
 
-def get_excerpt_id_from_wav(wav_file) -> str: #TODO: remove the "_from_wav" from this function name if I don't need regular get_excerpt_id function
+def round_sample(sample):
+    for i in range(len(SAMPLE_VALUES)):
+        if SAMPLE_VALUES[i] < sample:
+            if sample - SAMPLE_VALUES[i] > SAMPLE_VALUES[i - 1] - sample:  # TODO: fix this, it's a linear comparison on a quadratic relation
+                return SAMPLE_VALUES[i - 1]
+            else:
+                return SAMPLE_VALUES[i]
+    return 1.0
 
-    kind = filetype.guess(wav_file)
-    if kind is None:
-        print('Cannot guess file type!')
-        return
 
-    print('File extension: %s' % kind.extension)
-    print('File MIME type: %s' % kind.mime)
-
-    data = wave.open(wav_file, 'rb')
-    print(str(data))
+def get_id_from_buffer(buffer):
+    digits = []
+    for i in range(len(buffer)):
+        sample = round_sample(buffer[i])
+        sample_level = (SAMPLE_VALUES.index(sample))
+        digits.append(B35_DIGITS[sample_level])
+    return ''.join(digits)
 
 
 def get_excerpt_data(id: str) -> List[int]:
@@ -83,6 +88,18 @@ def get_excerpt_data(id: str) -> List[int]:
         sample_index = int(b35_digit, 35)  # TODO: catch error with invalid data
         excerpt_data.append(SAMPLE_VALUES[sample_index])
     return excerpt_data
+
+
+# def get_excerpt_id_from_wav(wav_file) -> str:
+#     kind = filetype.guess(wav_file)
+#     if kind is None:
+#         print('Cannot guess file type!')
+#
+#     print('File extension: %s' % kind.extension)
+#     print('File MIME type: %s' % kind.mime)
+#
+#     data = wave.open(wav_file, 'rb')
+#     print(str(data))
 
 
 def get_excerpt_data_from_base10(id: int) -> List[int]:
@@ -119,16 +136,6 @@ def play_excerpt(id):
 
 def play_random_excerpt():
     play_excerpt(r.randrange(TOTAL_EXCERPTS))
-
-
-def round_sample(sample):
-    for i in range(len(SAMPLE_VALUES)):
-        if SAMPLE_VALUES[i] < sample:
-            if sample - SAMPLE_VALUES[i] > SAMPLE_VALUES[i - 1] - sample:  # TODO: fix this, it's a linear comparison on a quadratic relation
-                return SAMPLE_VALUES[i - 1]
-            else:
-                return SAMPLE_VALUES[i]
-    return 1.0
 
 
 def get_excerpt_id(buffer):
