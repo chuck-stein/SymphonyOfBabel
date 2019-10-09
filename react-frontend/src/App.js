@@ -12,7 +12,6 @@ import {AudioSettingsProvider} from "./AudioSettingsContext";
 
 function App() {
 
-    // TODO: check to make sure I'm using Context API right
     const [audioContext, setAudioContext] = useState({
         sampleRate: 24000,
         excerptDuration: 5
@@ -22,8 +21,6 @@ function App() {
         async function getAudioSettings() {
             const response = await axios.get('/audioSettings');
             const data = await response.data;
-
-            // TODO: is this the best way to save sample rate and excerpt duration as global constants?
             setAudioContext({
                 sampleRate: data.sampleRate,
                 excerptDuration: data.excerptDuration
