@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import Button from "./Button";
 import AudioSettingsContext from "../AudioSettingsContext";
+import Button from "./Button";
 import LoadScreen from "./LoadScreen";
 import Excerpt from "./Excerpt";
 
 function Search() {
-
+:
     const [queryReady, setQueryReady] = useState(false);
     const [micQuery, setMicQuery] = useState([]);
     const [loading, setLoading] = useState(false);
