@@ -35,14 +35,5 @@ def search_by_mic():
     return jsonify({'excerptID': excerpt_id, 'excerptData': excerpt_data})
 
 
-# NOT YET IMPLEMENTED:
-# @app.route('/searchByFile', methods=['POST'])
-# def search_by_mic():
-#     search_query = request.files['searchQuery']
-#     id = am.get_excerpt_id_from_wav(search_query)
-#     excerpt_data = am.get_excerpt_data(id)
-#     return jsonify({'excerptID': id, 'excerptData': excerpt_data})
-
-
 if __name__ == '__main__':
     app.run(debug=True)
