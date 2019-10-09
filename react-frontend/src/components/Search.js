@@ -29,7 +29,7 @@ function Search() {
         }
     }, [searchQuery]);
 
-    const record= () => {
+    const record_OLD= () => {
         // TODO: for mobile, use: <input type="file" accept="audio/*" capture>
 
         // TODO: use Recorder.js
@@ -73,6 +73,20 @@ function Search() {
             // }
         }
         getMicData();
+    };
+
+    const record = async () => {
+        const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+        const context = new AudioContext();
+        const source = context.createMediaStreamSource(stream);
+        const processor = context.createScriptProcessor(1024, 1, 1); // TODO: determine best buffer size
+        source.connect(processor);
+        processor.connect(context.destination);
+
+        processor.onaudioprocess = function(e) {
+          // Do something with the data, e.g. convert it to WAV
+          console.log(e.inputBuffer);
+        };
     };
 
     return (
