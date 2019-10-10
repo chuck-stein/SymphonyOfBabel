@@ -23,7 +23,7 @@ function Search() {
             setLoading(false);
         }
         if (queryReady) search();
-    }, [micQuery]);
+    }, [micQuery, queryReady]);
 
     const record = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({audio: true}); // TODO: handle denial of microphone permission
@@ -59,8 +59,8 @@ function Search() {
                         micData.push(sample);
                     }
                 }
-                setQueryReady(true);
                 setMicQuery(micData);
+                setQueryReady(true);
             }
         };
     };

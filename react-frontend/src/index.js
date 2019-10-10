@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+axios.defaults.baseURL = "https://flask-app-env.gfj2m3nya9.us-east-1.elasticbeanstalk.com"
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

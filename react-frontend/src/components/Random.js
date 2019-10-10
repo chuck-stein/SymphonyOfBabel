@@ -13,6 +13,7 @@ function Random() {
         async function getRandomExcerpt() {
             const response = await axios.get('/randomExcerpt');
             const data = await response.data;
+            console.log(data);
             setID(data.excerptID);
             setBufferData(data.excerptData);
             setLoading(false);

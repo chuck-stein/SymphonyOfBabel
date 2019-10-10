@@ -18,10 +18,9 @@ const ExcerptFetch = (props) => {
             } catch (error) { // TODO: handle bad request in view
                 console.log("ERROR: " + error);
             }
-
         }
         getExcerpt();
-    }, []);
+    }, [props.match.params.id]);
 
     return (
         <div>

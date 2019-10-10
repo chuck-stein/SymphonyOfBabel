@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
+
 import audio_manager as am
 
 application = Flask(__name__)
 
+CORS(application)
 
 @application.route('/audioSettings', methods=['GET'])
 def get_audio_settings():
