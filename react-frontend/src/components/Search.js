@@ -74,6 +74,7 @@ function Search() {
                 </div>
             }
         </div>
+
     );
 }
 

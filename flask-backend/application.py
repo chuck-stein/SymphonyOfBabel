@@ -1,22 +1,22 @@
 from flask import Flask, jsonify, request
-import audiomanager as am
+import audio_manager as am
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 
-@app.route('/audioSettings', methods=['GET'])
+@application.route('/audioSettings', methods=['GET'])
 def get_audio_settings():
     return jsonify({'sampleRate': am.SAMPLE_RATE, 'excerptDuration': am.EXCERPT_DURATION}), 200
 
 
-@app.route('/randomExcerpt', methods=['GET'])
+@application.route('/randomExcerpt', methods=['GET'])
 def get_random_excerpt():
     random_excerpt_id = am.get_random_id()
     random_excerpt_data = am.get_excerpt_data(random_excerpt_id)
     return jsonify({'excerptID': random_excerpt_id, 'excerptData': random_excerpt_data}), 200
 
 
-@app.route('/specificExcerpt', methods=['POST'])
+@application.route('/specificExcerpt', methods=['POST'])
 def get_excerpt():
     id = request.json['id']
     try:
@@ -27,7 +27,7 @@ def get_excerpt():
         return jsonify({'excerptData': excerpt_data}), 200
 
 
-@app.route('/searchByMic', methods=['POST'])
+@application.route('/searchByMic', methods=['POST'])
 def search_by_mic():
     search_query = request.json['searchQuery']
     excerpt_id = am.get_id_from_buffer(search_query)
@@ -36,4 +36,4 @@ def search_by_mic():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    application.run()  # debug=True
