@@ -67,8 +67,10 @@ def round_sample(sample: float) -> float:
 
 
 def get_id_from_buffer(buffer: List[float]) -> str:
+    if len(buffer) < TOTAL_SAMPLES:
+        raise ValueError
     digits = []
-    for i in range(len(buffer)):
+    for i in range(TOTAL_SAMPLES):
         sample = round_sample(buffer[i])
         sample_level = (SAMPLE_VALUES.index(sample))
         digits.append(B35_DIGITS[sample_level])
