@@ -68,8 +68,10 @@ function Search() {
     return (
         <div className={'search'}>
             {loading ? <LoadScreen /> : queryReady ? <Excerpt id={id} bufferData={bufferData}/> :
-                [<h2>Record any {audioSettingsContext.excerptDuration}-second sound to locate its corresponding excerpt:</h2>,
-                <Button text='Start Recording' callback={() => record()} />]
+                <div>
+                    <h2>Record any {audioSettingsContext.excerptDuration}-second sound to locate its corresponding excerpt:</h2>,
+                    <Button text='Start Recording' callback={() => record()} />
+                </div>
             }
         </div>
     );
