@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-axios.defaults.baseURL = "https://flask-app-env.gfj2m3nya9.us-east-1.elasticbeanstalk.com"
+axios.defaults.baseURL = "https://api.symphonyofbabel.com";
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
