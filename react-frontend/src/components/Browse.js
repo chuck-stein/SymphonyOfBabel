@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Button from "./Button";
 import {Redirect} from 'react-router-dom';
 
-function Browse() {
+const Browse = () => {
 
     const [shouldFetch, setShouldFetch] = useState(false);
     const [excerptPath, setExcerptPath] = useState('/excerpt/0');

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import AudioSettingsContext from "../AudioSettingsContext";
 
-function About() {
+const About = () => {
     const audioSettingsContext = useContext(AudioSettingsContext);
     const samplesPerExcerpt = audioSettingsContext.sampleRate * audioSettingsContext.excerptDuration;
 

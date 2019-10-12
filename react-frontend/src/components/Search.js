@@ -5,7 +5,7 @@ import Button from "./Button";
 import LoadScreen from "./LoadScreen";
 import Excerpt from "./Excerpt";
 
-function Search() {
+const Search = () => {
 
     const [queryReady, setQueryReady] = useState(false);
     const [micQuery, setMicQuery] = useState([]);
@@ -15,14 +15,14 @@ function Search() {
     const audioSettingsContext = useContext(AudioSettingsContext);
 
     useEffect(() => {
-        async function search() {
+        const submitQuery = async () => {
             const response = await axios.post('/searchByMic', { searchQuery: micQuery });
             const data = await response.data;
             setID(data.excerptID);
             setBufferData(data.excerptData);
             setLoading(false);
         }
-        if (queryReady) search();
+        if (queryReady) submitQuery();
     }, [micQuery, queryReady]);
 
     const record = async () => {
@@ -34,7 +34,7 @@ function Search() {
         processor.connect(context.destination);
         let buffers = [];
         let samplesGathered = 0;
-        processor.onaudioprocess = function(e) { // TODO: update this deprecated script processor method to AudioWorklet
+        processor.onaudioprocess = (e) => { // TODO: update this deprecated script processor method to AudioWorklet
             const downsampleContext = new OfflineAudioContext(
                 e.inputBuffer.numberOfChannels,
                 e.inputBuffer.duration * audioSettingsContext.sampleRate,

@@ -3,14 +3,14 @@ import axios from "axios";
 import LoadScreen from "./LoadScreen";
 import Excerpt from "./Excerpt";
 
-function Random() {
+const Random = () => {
 
     const [loading, setLoading] = useState(true);
     const [id, setID] = useState(-1);
     const [bufferData, setBufferData] = useState([]);
 
     useEffect(() => {
-        async function getRandomExcerpt() {
+        const getRandomExcerpt = async () => {
             const response = await axios.get('/randomExcerpt');
             const data = await response.data;
             console.log(data);

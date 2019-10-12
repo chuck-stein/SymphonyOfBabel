@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import Button from "./Button";
 import AudioSettingsContext from "../AudioSettingsContext";
 
-function Excerpt(props) {
+const Excerpt = (props) => {
 
     const [playing, setPlaying] = useState(false);
     const audioSettingsContext = useContext(AudioSettingsContext);

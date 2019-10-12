@@ -10,7 +10,7 @@ import Search from "./components/Search";
 import Random from "./components/Random";
 import ExcerptFetch from "./components/ExcerptFetch";
 
-function App() {
+const App = () => {
 
     const [audioContext, setAudioContext] = useState({
         sampleRate: 24000,
@@ -18,7 +18,7 @@ function App() {
     });
 
     useEffect(() => {
-        async function getAudioSettings() {
+        const getAudioSettings = async () => {
             const response = await axios.get('/audioSettings');
             const data = await response.data;
             setAudioContext({
