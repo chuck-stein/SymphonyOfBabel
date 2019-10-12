@@ -69,6 +69,6 @@ const Excerpt = (props) => {
             <Button text='Copy Excerpt ID' callback={() => copyID()} />
         </div>
     );
-}
+};
 
 export default Excerpt;

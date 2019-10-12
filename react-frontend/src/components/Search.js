@@ -21,7 +21,7 @@ const Search = () => {
             setID(data.excerptID);
             setBufferData(data.excerptData);
             setLoading(false);
-        }
+        };
         if (queryReady) submitQuery();
     }, [micQuery, queryReady]);
 
@@ -76,6 +76,6 @@ const Search = () => {
         </div>
 
     );
-}
+};
 
 export default Search;

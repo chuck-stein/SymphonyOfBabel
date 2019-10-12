@@ -17,7 +17,7 @@ const Random = () => {
             setID(data.excerptID);
             setBufferData(data.excerptData);
             setLoading(false);
-        }
+        };
         getRandomExcerpt();
     }, []);
 
@@ -26,6 +26,6 @@ const Random = () => {
             {loading ? <LoadScreen /> : <Excerpt id={id} bufferData={bufferData}/>}
         </div>
     );
-}
+};
 
 export default Random;

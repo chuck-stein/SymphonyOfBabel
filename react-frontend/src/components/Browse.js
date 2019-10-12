@@ -21,6 +21,6 @@ const Browse = () => {
             <Button text='Locate' callback={() => enterID()} />
         </div>
         );
-}
+};
 
 export default Browse;

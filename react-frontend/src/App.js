@@ -25,7 +25,7 @@ const App = () => {
                 sampleRate: data.sampleRate,
                 excerptDuration: data.excerptDuration
             });
-        }
+        };
         getAudioSettings();
     }, []);
 
@@ -45,6 +45,6 @@ const App = () => {
             </Router>
         </AudioSettingsProvider>
     );
-}
+};
 
 export default App;
