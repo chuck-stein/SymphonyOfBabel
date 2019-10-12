@@ -59,7 +59,7 @@ def get_random_id() -> str:
 def round_sample(sample: float) -> float:
     for i in range(len(SAMPLE_VALUES)):
         if SAMPLE_VALUES[i] < sample:
-            if sample - SAMPLE_VALUES[i] > SAMPLE_VALUES[i - 1] - sample:  # TODO: fix this, it's a linear comparison on a quadratic relation
+            if sample - SAMPLE_VALUES[i] > SAMPLE_VALUES[i - 1] - sample:  # TODO: optimize this, it's a linear comparison on a quadratic relation
                 return SAMPLE_VALUES[i - 1]
             else:
                 return SAMPLE_VALUES[i]
@@ -67,19 +67,27 @@ def round_sample(sample: float) -> float:
 
 
 def get_id_from_buffer(buffer: List[float]) -> str:
-    if len(buffer) < TOTAL_SAMPLES:
-        raise ValueError
     digits = []
     for i in range(TOTAL_SAMPLES):
-        sample = round_sample(buffer[i])
-        sample_level = (SAMPLE_VALUES.index(sample))
-        digits.append(B35_DIGITS[sample_level])
+        if i < len(buffer):
+            if buffer[i] < -1 or buffer[i] > 1:
+                raise ValueError('Samples must be in range [-1.0, 1.0] when calculating ID.')
+            sample = round_sample(buffer[i])
+            sample_level = (SAMPLE_VALUES.index(sample))
+            digits.append(B35_DIGITS[sample_level])
+        else:
+            zero_index = SAMPLE_VALUES.index(sample)
+            digits.append(B35_DIGITS[zero_index])
     return ''.join(digits)
 
 
 def get_excerpt_data(id: str) -> List[int]:
+    if len(id) != TOTAL_SAMPLES:
+        raise ValueError('Improper length ID -- must be ' + str(TOTAL_SAMPLES) + ' characters long.')
     excerpt_data = []
     for b35_digit in id:
-        sample_index = int(b35_digit, 35)  # TODO: catch error with invalid data
+        if b35_digit.lower() not in B35_DIGITS:
+            raise ValueError('ID must only contain alphanumeric characters, excluding "Z".')
+        sample_index = int(b35_digit, 35)
         excerpt_data.append(SAMPLE_VALUES[sample_index])
     return excerpt_data

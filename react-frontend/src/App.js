@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import axios from "axios";
+import {AudioSettingsProvider} from "./AudioSettingsContext";
 import './App.css';
 import Nav from "./components/Nav";
 import About from "./components/About";
 import Browse from "./components/Browse";
 import Search from "./components/Search";
 import Random from "./components/Random";
-import axios from "axios";
 import ExcerptFetch from "./components/ExcerptFetch";
-import {AudioSettingsProvider} from "./AudioSettingsContext";
 
 function App() {
 

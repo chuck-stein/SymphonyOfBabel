@@ -45,7 +45,7 @@ function Excerpt(props) {
                 console.log("DONE PLAYING!");
             };
             let buffer = context.createBuffer(1,
-                audioSettingsContext.excerptDuration * audioSettingsContext.sampleRate, audioSettingsContext.sampleRate); // TODO: keep excerptDuration and sampleRate as global variables via initial API call
+                audioSettingsContext.excerptDuration * audioSettingsContext.sampleRate, audioSettingsContext.sampleRate);
             buffer.copyToChannel(new Float32Array(props.bufferData), 0);
             source.buffer = buffer;
             source.connect(context.destination);

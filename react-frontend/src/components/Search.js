@@ -35,7 +35,7 @@ function Search() {
         let buffers = [];
         let samplesGathered = 0;
         processor.onaudioprocess = function(e) { // TODO: update this deprecated script processor method to AudioWorklet
-            const downsampleContext = new OfflineAudioContext( // TODO: why is this offline?
+            const downsampleContext = new OfflineAudioContext(
                 e.inputBuffer.numberOfChannels,
                 e.inputBuffer.duration * audioSettingsContext.sampleRate,
                 audioSettingsContext.sampleRate
