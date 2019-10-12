@@ -8,7 +8,7 @@ import About from "./components/About";
 import Browse from "./components/Browse";
 import Search from "./components/Search";
 import Random from "./components/Random";
-import ExcerptFetch from "./components/ExcerptFetch";
+import Excerpt from "./components/Excerpt";
 
 const App = () => {
 
@@ -29,6 +29,7 @@ const App = () => {
         getAudioSettings();
     }, []);
 
+    // TODO: add Route for '/excerpt/:id', which renders an Excerpt, and make Excerpts render an ExcerptFetch if they don't know their bufferData
     return (
         <AudioSettingsProvider value={audioContext}>
            <Router>
@@ -39,7 +40,7 @@ const App = () => {
                         <Route path='/browse' component={Browse} />
                         <Route path='/search' component={Search} />
                         <Route path='/random' component={Random} />
-                        <Route path='/excerpt/:id' component={ExcerptFetch} />
+                        {/*<Route path='/excerpt/:id' component={Excerpt} />*/}
                     </Switch>
                 </div>
             </Router>

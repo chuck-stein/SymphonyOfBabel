@@ -1,26 +1,28 @@
 import React, {useState} from 'react';
 import Button from "./Button";
-import {Redirect} from 'react-router-dom';
+import axios from "axios";
+import ExcerptFetch from "./ExcerptFetch";
 
 const Browse = () => {
 
     const [shouldFetch, setShouldFetch] = useState(false);
-    const [excerptPath, setExcerptPath] = useState('/excerpt/0');
+    const [enteredID, setEnteredID] = useState("");
 
-    const enterID = () => {
-        const id = document.getElementById('idField').value;
-        console.log('ID entered: ' + id);
-        setExcerptPath('/excerpt/' + id);
-        setShouldFetch(true);
+    const browseAPICall = async () => {
+        const response = await axios.post('/specificExcerpt', { id: enteredID });
+        return response.data;
     };
 
-    return shouldFetch ? (<Redirect to={excerptPath}/>) : (
+    return shouldFetch ? (<ExcerptFetch apiCall={() => browseAPICall()} />) : (
         <div className='browse'>
             <h2>Paste the ID of the excerpt you want to navigate to:</h2>
             <textarea id='idField' rows='10' cols='50' />
-            <Button text='Locate' callback={() => enterID()} />
+            <Button text='Locate' callback={() => {
+                setEnteredID(document.getElementById('idField').value);
+                setShouldFetch(true);
+            }} />
         </div>
-        );
+    );
 };
 
 export default Browse;

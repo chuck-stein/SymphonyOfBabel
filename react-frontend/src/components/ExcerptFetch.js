@@ -1,30 +1,26 @@
 import React, {useState, useEffect} from 'react';
-import axios from "axios";
 import LoadScreen from "./LoadScreen";
 import Excerpt from "./Excerpt";
 
 const ExcerptFetch = (props) => {
 
     const [loading, setLoading] = useState(true);
+    const [id, setID] = useState("");
     const [bufferData, setBufferData] = useState([]);
 
     useEffect(() => {
-        const getExcerpt = async () => {
-            try {
-                const response = await axios.post('/specificExcerpt', { id: props.match.params.id });
-                const data = await response.data;
-                setBufferData(data.excerptData);
-                setLoading(false);
-            } catch (error) { // TODO: handle bad request in view
-                console.log("ERROR: " + error);
-            }
+        const getExcerptInfo = async () => {
+            const data = await props.apiCall();
+            setBufferData(data.excerptData);
+            setID(data.excerptID);
+            setLoading(false);
         };
-        getExcerpt();
-    }, [props.match.params.id]);
+        getExcerptInfo();
+    }, [props]);
 
     return (
         <div>
-            {loading ? <LoadScreen /> : <Excerpt id={props.match.params.id} bufferData={bufferData}/>}
+            {loading ? <LoadScreen /> : <Excerpt id={id} bufferData={bufferData} />}
         </div>
     );
 };

@@ -1,29 +1,14 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import AudioSettingsContext from "../AudioSettingsContext";
 import Button from "./Button";
-import LoadScreen from "./LoadScreen";
-import Excerpt from "./Excerpt";
+import ExcerptFetch from "./ExcerptFetch";
 
 const Search = () => {
 
     const [queryReady, setQueryReady] = useState(false);
     const [micQuery, setMicQuery] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [id, setID] = useState(-1);
-    const [bufferData, setBufferData] = useState([]);
     const audioSettingsContext = useContext(AudioSettingsContext);
-
-    useEffect(() => {
-        const submitQuery = async () => {
-            const response = await axios.post('/searchByMic', { searchQuery: micQuery });
-            const data = await response.data;
-            setID(data.excerptID);
-            setBufferData(data.excerptData);
-            setLoading(false);
-        };
-        if (queryReady) submitQuery();
-    }, [micQuery, queryReady]);
 
     const record = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({audio: true}); // TODO: handle denial of microphone permission
@@ -52,7 +37,6 @@ const Search = () => {
             });
             if (samplesGathered >= audioSettingsContext.sampleRate * audioSettingsContext.excerptDuration) {
                 processor.disconnect();
-                setLoading(true);
                 let micData = [];
                 for (let buffer of buffers) {
                     for (let sample of buffer) {
@@ -65,17 +49,18 @@ const Search = () => {
         };
     };
 
-    return (
-        <div>
-            {loading ? <LoadScreen /> : queryReady ? <Excerpt id={id} bufferData={bufferData}/> :
-                <div className={'search'}>
-                    <h2>Record any {audioSettingsContext.excerptDuration}-second sound to locate its corresponding excerpt:</h2>
-                    <Button text='Start Recording' callback={() => record()} />
-                </div>
-            }
-        </div>
+    const searchAPICall = async () => {
+        const response = await axios.post('/searchByMic', { searchQuery: micQuery });
+        return response.data;
+    };
 
+    return queryReady ? (<ExcerptFetch apiCall={() => searchAPICall()} />) : (
+        <div className={'search'}>
+            <h2>Record any {audioSettingsContext.excerptDuration}-second sound to locate its corresponding excerpt:</h2>
+            <Button text='Start Recording' callback={() => record()} />
+        </div>
     );
+
 };
 
 export default Search;

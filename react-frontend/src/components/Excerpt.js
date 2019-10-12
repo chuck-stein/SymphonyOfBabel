@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Button from "./Button";
 import AudioSettingsContext from "../AudioSettingsContext";
 
@@ -28,9 +28,8 @@ const Excerpt = (props) => {
         return abbreviation;
     };
 
-    const playExcerpt = () => {
-        if (!playing) {
-            setPlaying(true);
+    useEffect(() => {
+        if (playing) {
             if (!window.AudioContext) {
                 if (!window.webkitAudioContext) {
                     alert("Your browser cannot play this excerpt because it does not support any AudioContext.");
@@ -42,7 +41,6 @@ const Excerpt = (props) => {
             let source = context.createBufferSource();
             source.onended = () => {
                 setPlaying(false);
-                console.log("DONE PLAYING!");
             };
             let buffer = context.createBuffer(1,
                 audioSettingsContext.excerptDuration * audioSettingsContext.sampleRate, audioSettingsContext.sampleRate);
@@ -50,8 +48,9 @@ const Excerpt = (props) => {
             source.buffer = buffer;
             source.connect(context.destination);
             source.start(0);
+            return () => {source.stop()};
         }
-    };
+    }, [playing, props.bufferData, audioSettingsContext]);
 
     const copyID = () => {
         const dummyTextArea = document.createElement("textarea");
@@ -65,7 +64,7 @@ const Excerpt = (props) => {
     return (
         <div className='excerpt'>
             <h1>Excerpt {abbreviateExcerptID(5)}</h1>
-            <Button text='Play Excerpt' callback={() => playExcerpt()} />
+            <Button text='Play Excerpt' callback={() => { if (!playing) setPlaying(true) }} />
             <Button text='Copy Excerpt ID' callback={() => copyID()} />
         </div>
     );
