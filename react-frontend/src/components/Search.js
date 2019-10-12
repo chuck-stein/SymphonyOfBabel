@@ -49,6 +49,7 @@ const Search = () => {
                     setQueryReady(true);
                 }
             };
+            return () => {processor.disconnect()};
         };
 
         if (recording) record();
@@ -63,7 +64,7 @@ const Search = () => {
     return queryReady ? (<ExcerptFetch apiCall={() => searchAPICall()} />) : (
         <div className={'search'}>
             <h2>Record any {audioSettingsContext.excerptDuration}-second sound to locate its corresponding excerpt:</h2>
-            <Button text='Start Recording' callback={() => { if (!recording) setRecording(true) }} />
+            <Button text='Start Recording' callback={() => { if (!recording) setRecording(true) }} unusable={recording} />
         </div>
     );
 

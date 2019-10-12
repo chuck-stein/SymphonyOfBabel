@@ -70,15 +70,12 @@ textarea {
 }
 
 .buttonComponent {
-    background-color: #CDD6DD;
     font-size: 18px;
     width: 200px;
     height: 40px;
     border-radius: 25px;
-    border: 1px solid black;
     margin-top: 10px;
     margin-bottom: 10px;
-    cursor: pointer;
 }
 
 .buttonComponent:hover {

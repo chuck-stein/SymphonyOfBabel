@@ -64,7 +64,7 @@ const Excerpt = (props) => {
     return (
         <div className='excerpt'>
             <h1>Excerpt {abbreviateExcerptID(5)}</h1>
-            <Button text='Play Excerpt' callback={() => { if (!playing) setPlaying(true) }} />
+            <Button text='Play Excerpt' callback={() => { if (!playing) setPlaying(true) }} unusable={playing} />
             <Button text='Copy Excerpt ID' callback={() => copyID()} />
         </div>
     );
