@@ -39,8 +39,8 @@ const Search = () => {
                 if (samplesGathered >= audioSettingsContext.sampleRate * audioSettingsContext.excerptDuration) {
                     processor.disconnect();
                     let micData = [];
-                    for (let buffer of buffers) {
-                        for (let sample of buffer) {
+                    for (const buffer of buffers) {
+                        for (const sample of buffer) {
                             micData.push(sample);
                         }
                     }

@@ -70,8 +70,6 @@ def get_id_from_buffer(buffer: List[float]) -> str:
     digits = []
     for i in range(TOTAL_SAMPLES):
         if i < len(buffer):
-            if buffer[i] < -1 or buffer[i] > 1:
-                raise ValueError('Samples must be in range [-1.0, 1.0] when calculating ID.')
             sample = round_sample(buffer[i])
             sample_level = (SAMPLE_VALUES.index(sample))
             digits.append(B35_DIGITS[sample_level])

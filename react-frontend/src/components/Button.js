@@ -2,14 +2,18 @@ import React from 'react';
 
 const Button = (props) => {
 
-    const style = {
-        backgroundColor: props.unusable ? '#CDCACC' : '#CDD6DD',
-        color: props.unusable ? '#666666' : '#000000',
-        border: props.unusable ? '1px solid #666666' : '1px solid black',
-        cursor: props.unusable ? 'default' : 'pointer'
-    };
+    const style = props.unusable ? {
+        backgroundColor: '#CDCACC',
+        color: '#666666',
+        border: '1px solid #666666',
+        cursor: 'default'
+    } : {};
 
-    return (<button style={style} className='buttonComponent' type='button' onClick={props.callback}>{props.text}</button>);
+    return (
+        <button style={style} className='buttonComponent' type='button' onClick={() => { if (!props.unusable) props.callback() }}>
+            {props.text}
+        </button>
+    );
 };
 
 export default Button;

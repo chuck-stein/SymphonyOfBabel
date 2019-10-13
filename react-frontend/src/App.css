@@ -10,6 +10,8 @@ body {
 
 h1, h2, h3, h4, h5 {
     text-align: center;
+    margin-left: 100px;
+    margin-right: 100px;
 }
 
 body, button {
@@ -54,6 +56,12 @@ nav a:hover {
 
 textarea {
     border-radius: 10px;
+    resize: none;
+    outline: none;
+}
+
+#idField {
+    margin-bottom: 20px;
 }
 
 .aboutParagraph {
@@ -70,18 +78,25 @@ textarea {
 }
 
 .buttonComponent {
+    background-color: #CDD6DD;
     font-size: 18px;
     width: 200px;
     height: 40px;
-    border-radius: 25px;
     margin-top: 10px;
     margin-bottom: 10px;
+    border: 1px solid black;
+    border-radius: 25px;
+    outline: none;
+    cursor: pointer;
 }
 
 .buttonComponent:hover {
     background-color: #CCFBFE;
 }
 
-.buttonComponent:focus {
-    outline: none;
+.buttonComponent:active:hover {
+    background-color: #CDCACC;
+    color: #666666;
+    border: 1px solid #666666;
+    cursor: default;
 }

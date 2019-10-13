@@ -1,10 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react';
-import Button from "./Button";
 import AudioSettingsContext from "../AudioSettingsContext";
+import Button from "./Button";
 
 const Excerpt = (props) => {
 
     const [playing, setPlaying] = useState(false);
+    const [copying, setCopying] = useState(false);
     const audioSettingsContext = useContext(AudioSettingsContext);
 
     /**
@@ -52,20 +53,23 @@ const Excerpt = (props) => {
         }
     }, [playing, props.bufferData, audioSettingsContext]);
 
-    const copyID = () => {
-        const dummyTextArea = document.createElement("textarea");
-        document.body.appendChild(dummyTextArea);
-        dummyTextArea.value = props.id;
-        dummyTextArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummyTextArea);
-    };
+    useEffect(() => {
+        if (copying) {
+            const dummyTextArea = document.createElement("textarea");
+            document.body.appendChild(dummyTextArea);
+            dummyTextArea.value = props.id;
+            dummyTextArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummyTextArea);
+            setCopying(false);
+        }
+    }, [copying, props.id]);
 
     return (
         <div className='excerpt'>
             <h1>Excerpt {abbreviateExcerptID(5)}</h1>
-            <Button text='Play Excerpt' callback={() => { if (!playing) setPlaying(true) }} unusable={playing} />
-            <Button text='Copy Excerpt ID' callback={() => copyID()} />
+            <Button text='Play Excerpt' callback={() => setPlaying(true)} unusable={playing} />
+            <Button text='Copy Excerpt ID' callback={() => setCopying(true)} unusable={copying} />
         </div>
     );
 };
