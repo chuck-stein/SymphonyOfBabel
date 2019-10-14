@@ -6,6 +6,7 @@
 body {
     background-color: #CDACA1;
     margin-top: 100px;
+    margin-bottom: 100px;
 }
 
 h1, h2, h3, h4, h5 {
@@ -18,17 +19,26 @@ body, button, textarea {
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-nav {
+.footer, nav {
     background-color: #CDD6DD;
     position: fixed;
-    top: 0;
     left: 0;
     right: 0;
-    height: 40px;
-    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
     align-items: center;
+    display: flex;
     justify-content: space-around;
     box-shadow: 0 0 25px 0 gray;
+}
+
+.footer {
+    bottom: 0;
+    text-align: center;
+}
+
+nav {
+    top: 0;
 }
 
 nav ul {
@@ -40,7 +50,9 @@ nav * {
 }
 
 nav li {
-    margin: 4vw;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    padding: 0;
 }
 
 nav a {

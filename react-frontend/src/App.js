@@ -31,7 +31,7 @@ const App = () => {
 
     return (
         <AudioSettingsProvider value={audioSettingsContext}>
-           <Router>
+            <Router>
                 <div className="App">
                     <Nav />
                     <Switch>
@@ -41,6 +41,13 @@ const App = () => {
                         <Route path='/random' component={Random} />
                         <Route path='/excerpt' component={Excerpt} />
                     </Switch>
+                    <div className='footer'>
+                        <p>
+                            This website is a work in progress. Inspired by Jonathon Basile's&nbsp;
+                            <a href='https://libraryofbabel.info' target='_blank'>Library of Babel.</a>
+                        </p>
+                    </div>
+
                 </div>
             </Router>
         </AudioSettingsProvider>

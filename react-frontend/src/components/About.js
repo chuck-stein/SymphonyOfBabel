@@ -23,9 +23,6 @@ const About = () => {
                 you. Take peace from the notion that there's always more of the symphony to discover, and you will be the
                 first to uncover many of its treasures.
             </p>
-            <p style={{textAlign: 'center'}}>
-                This website is a work in progress. Inspired by Jonathon Basile's <a href='https://libraryofbabel.info'>Library of Babel.</a>
-            </p>
         </div>
     );
 };
