@@ -47,7 +47,6 @@ const App = () => {
                             <a href='https://libraryofbabel.info' target='_blank' rel='noopener noreferrer'>Library of Babel.</a>
                         </p>
                     </div>
-
                 </div>
             </Router>
         </AudioSettingsProvider>

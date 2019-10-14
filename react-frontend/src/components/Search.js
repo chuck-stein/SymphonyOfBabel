@@ -38,6 +38,7 @@ const Search = () => {
                 samplesGathered += downsampledBuffer.length;
                 if (samplesGathered >= audioSettingsContext.sampleRate * audioSettingsContext.excerptDuration) {
                     processor.disconnect();
+                    stream.getTracks().forEach(track => track.stop());
                     let micData = [];
                     for (const buffer of buffers) {
                         for (const sample of buffer) {
