@@ -44,7 +44,7 @@ const App = () => {
                     <div className='footer'>
                         <p>
                             This website is a work in progress. Inspired by Jonathon Basile's&nbsp;
-                            <a href='https://libraryofbabel.info' target='_blank'>Library of Babel.</a>
+                            <a href='https://libraryofbabel.info' target='_blank' rel='noopener noreferrer'>Library of Babel.</a>
                         </p>
                     </div>
 
