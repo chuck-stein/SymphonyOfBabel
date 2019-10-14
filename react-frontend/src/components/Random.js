@@ -2,11 +2,7 @@ import React from 'react';
 import axios from "axios";
 import ExcerptFetch from "./ExcerptFetch";
 
-const Random = () => (
-    <div>
-        <ExcerptFetch apiCall={() => randomAPICall()} />
-    </div>
-);
+const Random = () => <ExcerptFetch apiCall={() => randomAPICall()} />;
 
 const randomAPICall = async () => {
     const response = await axios.get('/randomExcerpt');
