@@ -40,11 +40,9 @@ const Search = () => {
                     processor.disconnect();
                     stream.getTracks().forEach(track => track.stop());
                     let micData = [];
-                    for (const buffer of buffers) {
-                        for (const sample of buffer) {
-                            micData.push(sample);
-                        }
-                    }
+                    buffers.forEach(buffer =>
+                        buffer.forEach(sample => micData.push(sample))
+                    );
                     setRecording(false);
                     setMicQuery(micData);
                     setQueryReady(true);
