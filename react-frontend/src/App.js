@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import axios from "axios";
 import {AudioSettingsProvider} from "./AudioSettingsContext";
+import axios from "axios";
 import './App.css';
 import Nav from "./components/Nav";
 import About from "./components/About";
@@ -12,7 +12,7 @@ import Excerpt from "./components/Excerpt";
 
 const App = () => {
 
-    const [audioContext, setAudioContext] = useState({
+    const [audioSettingsContext, setAudioSettingsContext] = useState({
         sampleRate: 24000,
         excerptDuration: 5
     });
@@ -21,7 +21,7 @@ const App = () => {
         const getAudioSettings = async () => {
             const response = await axios.get('/audioSettings');
             const data = await response.data;
-            setAudioContext({
+            setAudioSettingsContext({
                 sampleRate: data.sampleRate,
                 excerptDuration: data.excerptDuration
             });
@@ -29,9 +29,8 @@ const App = () => {
         getAudioSettings();
     }, []);
 
-    // TODO: add Route for '/excerpt/:id', which renders an Excerpt, and make Excerpts render an ExcerptFetch if they don't know their bufferData
     return (
-        <AudioSettingsProvider value={audioContext}>
+        <AudioSettingsProvider value={audioSettingsContext}>
            <Router>
                 <div className="App">
                     <Nav />
@@ -40,7 +39,7 @@ const App = () => {
                         <Route path='/browse' component={Browse} />
                         <Route path='/search' component={Search} />
                         <Route path='/random' component={Random} />
-                        {/*<Route path='/excerpt/:id' component={Excerpt} />*/}
+                        <Route path='/excerpt' component={Excerpt} />
                     </Switch>
                 </div>
             </Router>

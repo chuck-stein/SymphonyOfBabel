@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {Redirect} from 'react-router-dom';
 import LoadScreen from './LoadScreen';
-import Excerpt from './Excerpt';
 
 const ExcerptFetch = (props) => {
 
@@ -25,13 +25,16 @@ const ExcerptFetch = (props) => {
         getExcerptInfo();
     }, [props, failed, failMessage]);
 
-    return (
-        <div>
-            {failed ? <h1>{failMessage}</h1> :
-                loading ? <LoadScreen/> : <Excerpt id={id} bufferData={bufferData}/>
-            }
-        </div>
-    );
+    if (failed) {
+        return <h1>{failMessage}</h1>;
+    }
+    return loading ? <LoadScreen /> : <Redirect to={{
+        pathname: '/excerpt',
+        state: {
+            id: id,
+            bufferData: bufferData
+        }
+    }} />;
 };
 
 export default ExcerptFetch;
