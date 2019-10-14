@@ -10,11 +10,11 @@ body {
 
 h1, h2, h3, h4, h5 {
     text-align: center;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 75px;
+    margin-right: 75px;
 }
 
-body, button {
+body, button, textarea {
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
@@ -55,19 +55,11 @@ nav a:hover {
 }
 
 textarea {
+    margin: 10px 30px;
+    padding: 5px;
     border-radius: 10px;
     resize: none;
     outline: none;
-}
-
-#idField {
-    margin-bottom: 20px;
-}
-
-.aboutParagraph {
-    margin-left: 50px;
-    margin-right: 50px;
-    width: 1000px;
 }
 
 .browse, .search, .excerpt, .loadScreen {
@@ -75,6 +67,12 @@ textarea {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.aboutParagraph {
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 1000px;
 }
 
 .buttonComponent {

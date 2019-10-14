@@ -23,13 +23,13 @@ const Browse = () => {
     };
 
     const evaluateID = () => {
-        const idField = document.getElementById('idField');
-        const enteredText = idField.value;
+        const idEntryField = document.getElementById('idEntryField');
+        const enteredText = idEntryField.value;
         if (isValidID(enteredText)) {
             setEnteredID(enteredText);
             setShouldFetch(true);
         } else {
-            idField.select();
+            idEntryField.select();
             setInvalidID(true);
         }
     };
@@ -40,7 +40,7 @@ const Browse = () => {
     return (
         <div className='browse'>
             <h2>Paste the ID of the excerpt you want to navigate to:</h2>
-            <textarea id='idField' rows='10' cols='45' onInput={() => {setInvalidID(false)}} />
+            <textarea id='idEntryField' rows='10' cols='38' onInput={() => {setInvalidID(false)}} />
             <Button text='Locate' callback={() => evaluateID()} />
             {invalidID && <h4><em>INVALID ID! Ensure the ID was copied from an excerpt.</em></h4> }
         </div>

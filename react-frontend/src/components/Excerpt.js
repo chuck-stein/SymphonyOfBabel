@@ -59,33 +59,11 @@ const Excerpt = (props) => {
     }
     return (
         <div className='excerpt'>
-            <h1>Excerpt {abbreviateExcerptID(props.location.state ? props.location.state.id : '', 5)}</h1>
+            <h1>Symphony Excerpt</h1>
             <Button text={playing ? 'Playing...' : 'Play Excerpt'} callback={() => setPlaying(true)} unusable={playing} />
             <Button text='Copy Excerpt ID' callback={() => setCopying(true)} unusable={copying} />
         </div>
     );
-};
-
-/**
- * Get a string abbreviating the given ID, using its first {@param numChars} characters, followed by an ellipsis,
- * followed by its last {@param numChars} characters.
- * @param {string} id - The excerpt ID to be abbreviated
- * @param {number} numChars - The number of characters to which the beginning and end of the ID will be abbreviated
- * @returns {string} - The abbreviated ID, as a string
- */
-const abbreviateExcerptID = (id, numChars) => {
-    let abbreviation = '';
-    if (id <= numChars * 2) {
-        return id;
-    }
-    for (let i = 0; i < numChars; i++) {
-        abbreviation += id.charAt(i);
-    }
-    abbreviation += '...';
-    for (let i = 0; i < numChars; i++) {
-        abbreviation += id.charAt(id.length - numChars + i);
-    }
-    return abbreviation;
 };
 
 export default Excerpt;
