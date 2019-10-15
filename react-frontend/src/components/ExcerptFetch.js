@@ -23,7 +23,7 @@ const ExcerptFetch = (props) => {
             }
         };
         getExcerptInfo();
-    }, [props, failed, failMessage]);
+    }, []);
 
     if (failed) {
         return <h1>{failMessage}</h1>;

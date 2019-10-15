@@ -43,8 +43,12 @@ const App = () => {
                     </Switch>
                     <div className='footer'>
                         <p>
-                            This website is a work in progress. Inspired by Jonathon Basile's&nbsp;
-                            <a href='https://libraryofbabel.info' target='_blank' rel='noopener noreferrer'>Library of Babel.</a>
+                            This website is a&nbsp;
+                            <a href='https://github.com/chuck-stein/symphony-of-babel' target='_blank' rel='noopener noreferrer'>
+                                work in progress
+                            </a>.
+                            Please use latest version of Chrome or Firefox. Inspired by Jonathon Basile's&nbsp;
+                            <a href='https://libraryofbabel.info' target='_blank' rel='noopener noreferrer'>Library of Babel</a>.
                         </p>
                     </div>
                 </div>
