@@ -70,8 +70,10 @@ textarea {
     margin: 10px 30px;
     padding: 5px;
     border-radius: 10px;
+    font-size: 10pt;
     resize: none;
     outline: none;
+    border: 1px solid gray;
 }
 
 .browse, .search, .excerpt, .loadScreen {
