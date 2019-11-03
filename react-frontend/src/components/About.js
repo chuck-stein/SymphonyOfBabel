@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import AudioSettingsContext from "../AudioSettingsContext";
 
+// The About component is a blurb with info on the Symphony of Babel project.
 const About = () => {
     const audioSettingsContext = useContext(AudioSettingsContext);
     const samplesPerExcerpt = audioSettingsContext.sampleRate * audioSettingsContext.excerptDuration;

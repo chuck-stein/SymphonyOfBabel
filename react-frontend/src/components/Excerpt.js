@@ -3,11 +3,16 @@ import {Redirect} from 'react-router-dom';
 import AudioSettingsContext from "../AudioSettingsContext";
 import Button from "./Button";
 
+// The Excerpt component displays an audio excerpt with the ability to play it.
 const Excerpt = (props) => {
 
+    // Whether the audio excerpt is currently being played
     const [playing, setPlaying] = useState(false);
+    // Whether the audio excerpt is currently being copied
     const [copying, setCopying] = useState(false);
+    // Whether this Excerpt component was not created with audio data and an ID, so it cannot represent an audio excerpt
     const [unknownExcerptInfo, setUnknownExcerptInfo] = useState(false);
+    // The settings for audio excerpts (duration and sample rate)
     const audioSettingsContext = useContext(AudioSettingsContext);
 
     // If the user navigated here by entering a direct link, there is no ID or buffer data available, so redirect to homepage
@@ -18,6 +23,7 @@ const Excerpt = (props) => {
         }
     }, [props.location]);
 
+    // Play this audio excerpt
     useEffect(() => {
         if (playing) {
             if (!window.AudioContext) {
@@ -38,10 +44,11 @@ const Excerpt = (props) => {
             source.buffer = buffer;
             source.connect(context.destination);
             source.start(0);
-            return () => {source.stop()};
+            return () => {source.stop()}; // cleanup for when component dismounts, potentially while playing
         }
     }, [playing, props.location, audioSettingsContext]);
 
+    // Copy this audio excerpt ID
     useEffect(() => {
         if (copying) {
             const dummyTextArea = document.createElement("textarea");

@@ -1,10 +1,10 @@
 from typing import List
-import random as r
+import random as rand
 
-'''
+"""
 The handler for all things audio-related in the Symphony of Babel. Every possible audio excerpt from the symphony that is
 life, the universe, and everything is contained here, and each excerpt can be located by ID, or queried to locate its ID.
-'''
+"""
 
 # DEFINE APP-WIDE AUDIO PROPERTIES
 
@@ -52,14 +52,26 @@ assert (len(SAMPLE_VALUES) == SAMPLE_RANGE)
 # DEFINE FUNCTIONS FOR WORKING WITH AUDIO EXCERPTS
 
 def get_random_id() -> str:
-    digits = r.choices(B35_DIGITS, k=TOTAL_SAMPLES)
+    """
+    Get a random excerpt ID, consisting of base-35 digits each representing a sample value.
+    :return: a random excerpt ID
+    """
+    digits = rand.choices(B35_DIGITS, k=TOTAL_SAMPLES)
     return ''.join(digits)
 
 
 def round_sample(sample: float) -> float:
+    """
+    Round the given sample from the continuous range [-1.0, 1.0] to one of the 35 possible excerpt sample values in that
+    same range.
+    :param sample: an audio sample value to be rounded
+    :return: the rounded version of the the given sample
+    """
     for i in range(len(SAMPLE_VALUES)):
         if SAMPLE_VALUES[i] < sample:
-            if sample - SAMPLE_VALUES[i] > SAMPLE_VALUES[i - 1] - sample:  # TODO: optimize this, it's a linear comparison on a quadratic relation
+
+            # TODO: optimize this, it's a linear comparison on a quadratic relation
+            if sample - SAMPLE_VALUES[i] > SAMPLE_VALUES[i - 1] - sample:
                 return SAMPLE_VALUES[i - 1]
             else:
                 return SAMPLE_VALUES[i]
@@ -67,6 +79,11 @@ def round_sample(sample: float) -> float:
 
 
 def get_id_from_buffer(buffer: List[float]) -> str:
+    """
+    Get the excerpt ID for the given audio buffer by representing its sample values as base-35 digits.
+    :param buffer: an audio buffer containing sample values from -1.0 to 1.0 to get an excerpt ID for
+    :return: the excerpt ID for the given audio buffer
+    """
     digits = []
     for i in range(TOTAL_SAMPLES):
         if i < len(buffer):
@@ -80,6 +97,12 @@ def get_id_from_buffer(buffer: List[float]) -> str:
 
 
 def get_excerpt_data(id: str) -> List[int]:
+    """
+    Get the audio buffer of the excerpt represented by the given excerpt ID, by translating its base-35 digits to sample values
+    :param id: an excerpt ID of base-35 digits, with the same length as the number of audio samples in an excerpt
+    :return: the audio buffer for the given excerpt ID, containing sample values from -1.0 to 1.0 from the possible 35 choices
+    :raise ValueError: if the given string is not a valid excerpt ID
+    """
     if len(id) != TOTAL_SAMPLES:
         raise ValueError('Improper length ID -- must be ' + str(TOTAL_SAMPLES) + ' characters long.')
     excerpt_data = []

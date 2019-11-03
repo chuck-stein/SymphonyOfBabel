@@ -10,6 +10,7 @@ import Search from "./components/Search";
 import Random from "./components/Random";
 import Excerpt from "./components/Excerpt";
 
+// The App component is the entry point to the React web page, containing a header (nav bar), footer, and routes to other content.
 const App = () => {
 
     const [audioSettingsContext, setAudioSettingsContext] = useState({
