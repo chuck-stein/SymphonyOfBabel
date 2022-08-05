@@ -26,14 +26,14 @@ const Browse = () => {
     };
 
     /**
-     * Determine whether the given string is a valid excerpt ID. Valid IDs contain only base-35 digits, with length equal
+     * Determine whether the given string is a valid excerpt ID. Valid IDs contain only base-64 digits, with length equal
      * to the number of samples in an audio excerpt.
      * @param {string} s - the string entered by the user, to be checked for validity
      * @returns {boolean} whether or not the string entered by the user is a valid excerpt ID
      */
     const isValidID = (s) => {
         const numChars = audioSettingsContext.sampleRate * audioSettingsContext.excerptDuration;
-        const validIDs = new RegExp( '^[0-9a-y]{' + numChars + '}$', 'i');
+        const validIDs = new RegExp( '^[0-9a-zA-Z]{' + numChars + '}$', 'i'); // TODO: fix regex to include - and _
         return validIDs.test(s);
     };
 

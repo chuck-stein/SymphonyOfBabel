@@ -13,7 +13,7 @@ SAMPLE_RATE = 24000
 
 # the number of possible different sample values in an audio excerpt
 # (limiting the possibilities in this way greatly decreases the number of possible excerpts which sound the same)
-SAMPLE_RANGE = 35
+SAMPLE_RANGE = 64
 
 # the duration of each excerpt, in seconds
 EXCERPT_DURATION = 5
@@ -24,10 +24,12 @@ TOTAL_SAMPLES = SAMPLE_RATE * EXCERPT_DURATION
 # the number of possible audio excerpts in existence (given our data constraints)
 TOTAL_EXCERPTS = SAMPLE_RANGE ** TOTAL_SAMPLES
 
-# base 35 digits
-B35_DIGITS = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
-              "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y")
-
+B64_DIGITS = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+              "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+              "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+              "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+              "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+              "-", "_")
 
 def get_sample_values() -> tuple:
     """
@@ -53,16 +55,16 @@ assert (len(SAMPLE_VALUES) == SAMPLE_RANGE)
 
 def get_random_id() -> str:
     """
-    Get a random excerpt ID, consisting of base-35 digits each representing a sample value.
+    Get a random excerpt ID, consisting of base-64 digits each representing a sample value.
     :return: a random excerpt ID
     """
-    digits = rand.choices(B35_DIGITS, k=TOTAL_SAMPLES)
+    digits = rand.choices(B64_DIGITS, k=TOTAL_SAMPLES)
     return ''.join(digits)
 
 
 def round_sample(sample: float) -> float:
     """
-    Round the given sample from the continuous range [-1.0, 1.0] to one of the 35 possible excerpt sample values in that
+    Round the given sample from the continuous range [-1.0, 1.0] to one of the 64 possible excerpt sample values in that
     same range.
     :param sample: an audio sample value to be rounded
     :return: the rounded version of the the given sample
@@ -80,7 +82,7 @@ def round_sample(sample: float) -> float:
 
 def get_id_from_buffer(buffer: List[float]) -> str:
     """
-    Get the excerpt ID for the given audio buffer by representing its sample values as base-35 digits.
+    Get the excerpt ID for the given audio buffer by representing its sample values as base-64 digits.
     :param buffer: an audio buffer containing sample values from -1.0 to 1.0 to get an excerpt ID for
     :return: the excerpt ID for the given audio buffer
     """
@@ -89,26 +91,26 @@ def get_id_from_buffer(buffer: List[float]) -> str:
         if i < len(buffer):
             sample = round_sample(buffer[i])
             sample_level = (SAMPLE_VALUES.index(sample))
-            digits.append(B35_DIGITS[sample_level])
+            digits.append(B64_DIGITS[sample_level])
         else:
             zero_index = SAMPLE_VALUES.index(sample)
-            digits.append(B35_DIGITS[zero_index])
+            digits.append(B64_DIGITS[zero_index])
     return ''.join(digits)
 
 
 def get_excerpt_data(id: str) -> List[int]:
     """
-    Get the audio buffer of the excerpt represented by the given excerpt ID, by translating its base-35 digits to sample values
-    :param id: an excerpt ID of base-35 digits, with the same length as the number of audio samples in an excerpt
-    :return: the audio buffer for the given excerpt ID, containing sample values from -1.0 to 1.0 from the possible 35 choices
+    Get the audio buffer of the excerpt represented by the given excerpt ID, by translating its base-64 digits to sample values
+    :param id: an excerpt ID of base-64 digits, with the same length as the number of audio samples in an excerpt
+    :return: the audio buffer for the given excerpt ID, containing sample values from -1.0 to 1.0 from the possible 64 choices
     :raise ValueError: if the given string is not a valid excerpt ID
     """
     if len(id) != TOTAL_SAMPLES:
         raise ValueError('Improper length ID -- must be ' + str(TOTAL_SAMPLES) + ' characters long.')
     excerpt_data = []
-    for b35_digit in id:
-        if b35_digit.lower() not in B35_DIGITS:
+    for b64_digit in id:
+        if b64_digit.lower() not in B64_DIGITS:
             raise ValueError('ID must only contain alphanumeric characters, excluding "Z".')
-        sample_index = int(b35_digit, 35)
+        sample_index = int(b64_digit, 64)
         excerpt_data.append(SAMPLE_VALUES[sample_index])
     return excerpt_data

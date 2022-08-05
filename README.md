@@ -4,7 +4,7 @@ Previously located at <https://symphonyofbabel.com/>, presently down on hiatus.
 Symphony of Babel is a web app containing a collection of every possible snippet of sound. It is inspired by Jonathon Basile's website
 [Library of Babel](https://libraryofbabel.info/), which is the same concept except using text instead of audio.
 
-The "symphony" is divided into 35<sup>120,000</sup> different 5-second excerpts, and together they comprise everything you have ever heard
+The "symphony" is divided into 64<sup>120,000</sup> different 5-second excerpts, and together they comprise everything you have ever heard
 or ever could hear (albeit divided into 5-second chunks).
 
 ## Current Features

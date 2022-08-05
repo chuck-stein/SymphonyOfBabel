@@ -10,7 +10,7 @@ const About = () => {
         <div className='aboutParagraph'>
             <p>
                 Symphony of Babel is, in essence, a collection of every possible snippet of sound. The symphony is
-                divided into 35<sup>{samplesPerExcerpt.toLocaleString()}</sup> different {audioSettingsContext.excerptDuration}
+                divided into 64<sup>{samplesPerExcerpt.toLocaleString()}</sup> different {audioSettingsContext.excerptDuration}
                 -second excerpts, and together they comprise everything you have ever heard or ever could hear (albeit
                 divided into {audioSettingsContext.excerptDuration}-second chunks). Come, stay a while, see what the symphony
                 has to offer. Don't be turned off by the statistical likelihood that every random excerpt you stumble upon
