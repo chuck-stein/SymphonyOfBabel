@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Navigate} from 'react-router-dom';
+import {Navigate, useLocation} from 'react-router-dom';
 import AudioSettingsContext from "../AudioSettingsContext";
 import Button from "./Button";
 
@@ -15,13 +15,15 @@ const Excerpt = (props) => {
     // The settings for audio excerpts (duration and sample rate)
     const audioSettingsContext = useContext(AudioSettingsContext);
 
+    const location = useLocation()
+
     // If the user navigated here by entering a direct link, there is no ID or buffer data available, so redirect to homepage
     // TODO: implement direct links to excerpts, by somehow encoding ID to be short enough for AWS CloudFront URL
     useEffect(() => {
-        if (props.location.state == null) {
+        if (location.state == null) {
             setUnknownExcerptInfo(true);
         }
-    }, [props.location]);
+    }, [location]);
 
     // Play this audio excerpt
     useEffect(() => {
@@ -40,26 +42,26 @@ const Excerpt = (props) => {
             };
             let buffer = context.createBuffer(1,
                 audioSettingsContext.excerptDuration * audioSettingsContext.sampleRate, audioSettingsContext.sampleRate);
-            buffer.copyToChannel(new Float32Array(props.location.state.bufferData), 0);
+            buffer.copyToChannel(new Float32Array(location.state.bufferData), 0);
             source.buffer = buffer;
             source.connect(context.destination);
             source.start(0);
             return () => {source.stop()}; // cleanup for when component dismounts, potentially while playing
         }
-    }, [playing, props.location, audioSettingsContext]);
+    }, [playing, location, audioSettingsContext]);
 
     // Copy this audio excerpt ID
     useEffect(() => {
         if (copying) {
             const dummyTextArea = document.createElement("textarea");
             document.body.appendChild(dummyTextArea);
-            dummyTextArea.value = props.location.state.id;
+            dummyTextArea.value = location.state.id;
             dummyTextArea.select();
             document.execCommand("copy");
             document.body.removeChild(dummyTextArea);
             setCopying(false);
         }
-    }, [copying, props.location]);
+    }, [copying, location]);
 
     if (unknownExcerptInfo) {
         return <Navigate to='/' />; // Redirect to homepage because there is no excerpt to display
