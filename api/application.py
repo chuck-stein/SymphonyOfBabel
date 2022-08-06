@@ -11,9 +11,11 @@ application = Flask(__name__, static_url_path='', static_folder=react_build_fold
 
 CORS(application, supports_credentials=True)
 
+
 @application.route('/')
 def get_index():
     return render_template('index.html')
+
 
 # TODO: figure out why i need both inner and outer functions, and why i need functools
 # def endpoint(*route_args, **route_kwargs):
@@ -77,6 +79,7 @@ def search_by_mic():
     excerpt_id = am.get_id_from_buffer(search_query)
     excerpt_data = am.get_excerpt_data(excerpt_id)
     return jsonify({'excerptID': excerpt_id, 'excerptData': excerpt_data}), 200
+
 
 @application.errorhandler(404)
 def handle_404(e):
