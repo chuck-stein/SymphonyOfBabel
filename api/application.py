@@ -5,7 +5,7 @@ import audio_manager as am
 
 application = Flask(__name__)
 
-CORS(application)
+CORS(application, supports_credentials=True)
 
 
 @application.route('/audioSettings', methods=['GET'])
