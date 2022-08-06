@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-axios.defaults.baseURL = "https://api.symphonyofbabel.com";
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 ReactDOM.render(<App />, document.getElementById('root'));
