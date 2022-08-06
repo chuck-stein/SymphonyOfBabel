@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AudioSettingsProvider } from "./AudioSettingsContext";
 import axios from "axios";
 import "./App.css";
@@ -41,6 +41,7 @@ const App = () => {
             <Route path="search" element={<Search />} />
             <Route path="random" element={<Random />} />
             <Route path="excerpt" element={<Excerpt />} />
+            <Route path="*" element={<Navigate to="/"/>} />
           </Routes>
 
           <div className="footer">
