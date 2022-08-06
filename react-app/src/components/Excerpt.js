@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import AudioSettingsContext from "../AudioSettingsContext";
 import Button from "./Button";
 
@@ -62,7 +62,7 @@ const Excerpt = (props) => {
     }, [copying, props.location]);
 
     if (unknownExcerptInfo) {
-        return <Redirect to='/' />; // Redirect to homepage because there is no excerpt to display
+        return <Navigate to='/' />; // Redirect to homepage because there is no excerpt to display
     }
     return (
         <div className='excerpt'>

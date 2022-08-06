@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import {AudioSettingsProvider} from "./AudioSettingsContext";
 import axios from "axios";
 import './App.css';
@@ -35,13 +35,13 @@ const App = () => {
             <Router>
                 <div className="App">
                     <Nav />
-                    <Switch>
-                        <Route exact path='/' component={About} />
-                        <Route path='/browse' component={Browse} />
-                        <Route path='/search' component={Search} />
-                        <Route path='/random' component={Random} />
-                        <Route path='/excerpt' component={Excerpt} />
-                    </Switch>
+                    <Routes>
+                        <Route path='/' component={<About/>} />
+                        <Route path='/browse' component={<Browse/>} />
+                        <Route path='/search' component={<Search/>} />
+                        <Route path='/random' component={<Random/>} />
+                        <Route path='/excerpt' component={<Excerpt/>} />
+                    </Routes>
                     <div className='footer'>
                         <p>
                             This website is a&nbsp;
