@@ -19,11 +19,13 @@ const ExcerptFetch = (props) => {
   // The audio data of the excerpt being fetched
   const [bufferData, setBufferData] = useState([]);
 
+  const apiCall = props.apiCall
+
   // Make the API call for finding the audio excerpt
   useEffect(() => {
     const getExcerptInfo = async () => {
       try {
-        const data = await props.apiCall();
+        const data = await apiCall();
         setBufferData(data.excerptData);
         setID(data.excerptID);
         setLoading(false);
@@ -33,7 +35,7 @@ const ExcerptFetch = (props) => {
       }
     };
     getExcerptInfo();
-  }, []);
+  }, [apiCall]);
 
   if (failed) {
     return <h1>{failMessage}</h1>;
