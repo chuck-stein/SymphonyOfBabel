@@ -1,5 +1,5 @@
 # Symphony of Babel
-https://symphonyofbabel.com/
+<https://www.symphonyofbabel.com/>
 
 Symphony of Babel is a web app containing a collection of every possible snippet of sound. It is inspired by Jonathon Basile's website
 [Library of Babel](https://libraryofbabel.info/), which is the same concept except using text instead of audio.
