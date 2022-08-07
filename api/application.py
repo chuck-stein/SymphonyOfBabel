@@ -1,15 +1,15 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import audio_manager as am
 
-application = Flask(__name__, static_folder='../react-app/build/static', template_folder='../react-app/build')
+application = Flask(__name__, static_url_path='', static_folder='../react-app/build')
 
 CORS(application, supports_credentials=True)
 
 
 @application.route('/')
 def get_index():
-    return render_template('index.html')
+    return application.send_static_file('index.html')
 
 
 @application.route('/api/audioSettings', methods=['GET'])
@@ -59,5 +59,12 @@ def search_by_mic():
     return jsonify({'excerptID': excerpt_id, 'excerptData': excerpt_data}), 200
 
 
+@application.errorhandler(404)
+def not_found(_):
+    if request.path.startswith("/api"):
+        return jsonify(message="Resource not found"), 404
+    return application.send_static_file('index.html')
+
+
 if __name__ == '__main__':
-    application.run()
+    application.run(port=7000)
